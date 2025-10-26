@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Watson - Full-Stack Developer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            border: 2px solid white;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .contact-links a:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        main {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #667eea;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .about {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .highlight-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: white;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #667eea;
+        }
+
+        .experience-item {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .company {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .duration {
+            color: #888;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .experience-description {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .experience-description ul {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .experience-description li {
+            margin-bottom: 8px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .project-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .project-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 30px 20px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <header>
+                <h1>{{ profile.name }}</h1>
+                <p class="subtitle">{{ profile.title }}</p>
+                <p class="tagline">{{ profile.tagline }}</p>
+                <div class="contact-links">
+                    <a :href="'mailto:' + profile.email">{{ profile.email }}</a>
+                    <a :href="'tel:' + profile.phone">{{ profile.phone }}</a>
+                </div>
+            </header>
+
+            <main>
+                <section id="about">
+                    <h2>About Me</h2>
+                    <div class="about">
+                        <p>{{ about.intro }}</p>
+                        <div class="highlight-box">
+                            <h3>What I Bring to the Table</h3>
+                            <ul>
+                                <li v-for="strength in about.strengths" :key="strength">{{ strength }}</li>
+                            </ul>
+                        </div>
+                        <p>{{ about.closing }}</p>
+                    </div>
+                </section>
+
+                <section id="experience">
+                    <h2>Professional Experience</h2>
+
+                    <div v-for="job in experience" :key="job.company + job.title" class="experience-item">
+                        <div class="experience-header">
+                            <div>
+                                <div class="job-title">{{ job.title }}</div>
+                                <div class="company">{{ job.company }}</div>
+                            </div>
+                            <div class="duration">{{ job.duration }}</div>
+                        </div>
+                        <div class="experience-description">
+                            <ul>
+                                <li v-for="(achievement, index) in job.achievements" :key="index">
+                                    {{ achievement }}
+                                </li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span v-for="tech in job.technologies" :key="tech" class="tech-tag">
+                                    {{ tech }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="skills">
+                    <h2>Technical Skills</h2>
+                    <div class="skills-grid">
+                        <div v-for="category in skills" :key="category.name" class="skill-category">
+                            <h3>{{ category.name }}</h3>
+                            <div class="skill-tags">
+                                <span v-for="skill in category.items" :key="skill" class="skill-tag">
+                                    {{ skill }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="education">
+                    <h2>Education</h2>
+                    <div class="highlight-box">
+                        <h3>Stone Coast Academy, Miami, FL</h3>
+                        <p style="color: #555;">High School Diploma - 3.9 GPA</p>
+                        <p style="color: #555; margin-top: 10px;"><strong>Pierce College, Woodland Hills</strong> - Obtained waiver to study electronics, business, economics, and cinema at age 14</p>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>© {{ currentYear }} Max Watson. Built with Vue.js and passion for great code.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    profile: {
+                        name: 'Max Watson',
+                        title: 'CTO | Full-Stack Developer | Database Optimization Specialist',
+                        tagline: 'Third-generation programmer with 20+ years of experience. Jack of all trades, master of getting things done.',
+                        email: 'max.watson@fidnip.com',
+                        phone: '(818) 384-2866',
+                        location: 'Winnetka, CA'
+                    },
+                    about: {
+                        intro: "I've been programming since I was 7 years old, starting with Flash games and small projects. As a third-generation computer programmer, coding is in my DNA. I excel at taking on leadership and project management roles, bringing order to chaos, and delivering solutions that make a real impact.",
+                        strengths: [
+                            'Expert at learning and adapting quickly to new technologies',
+                            'Natural leader who fills in as needed - from scrum master to acting senior developer',
+                            'Strong focus on optimization and performance - saved companies 60%+ on cloud costs',
+                            'Experienced in managing offshore teams and working with stakeholders',
+                            'Deep expertise in both frontend and backend development'
+                        ],
+                        closing: "I'm looking to join a team where I can make a meaningful difference, leverage my broad skill set, and continue growing as both a developer and leader."
+                    },
+                    experience: [
+                        {
+                            title: 'Chief Technology Officer (CTO)',
+                            company: 'US DataCorp',
+                            duration: 'September 2023 - Present',
+                            achievements: [
+                                'Serve as Primary Developer for a big data company, managing 2 offshore development teams',
+                                'Built customer-facing web application from scratch using Node.js and Vue.js',
+                                'Optimized AWS-hosted PostgreSQL databases, increasing lookup speed by over 1,000%',
+                                'Reduced AWS infrastructure costs by 60% through strategic optimization of RDS systems',
+                                'Architected and managed API and web app development across distributed teams'
+                            ],
+                            technologies: ['Node.js', 'Vue.js', 'PostgreSQL', 'AWS', 'REST API']
+                        },
+                        {
+                            title: 'Senior Clojure Software Developer',
+                            company: 'Symplr',
+                            duration: 'January 2022 - January 2023',
+                            achievements: [
+                                'Developed AWS-based application using Clojure and ClojureScript with Datomic backend',
+                                'Created numerous API calls and RESTful API endpoints',
+                                'Implemented extensive frontend modifications and UI improvements',
+                                'Collaborated closely with product owner to ensure excellent UX and fast turnaround',
+                                'Worked with GraphQL and microservices architecture'
+                            ],
+                            technologies: ['Clojure', 'ClojureScript', 'Datomic', 'AWS', 'GraphQL', 'Microservices']
+                        },
+                        {
+                            title: 'Full-Stack Consultant (Blockchain & AI)',
+                            company: 'Independent Consulting',
+                            duration: 'June 2021 - 2024',
+                            achievements: [
+                                'Developed multiple projects in DeFi and NFT space',
+                                'Built blockchain-integrated applications with AI-generated content',
+                                'Specialized in Node.js applications with AWS-hosted backends',
+                                'Worked with cutting-edge cryptocurrency and Web3 technologies'
+                            ],
+                            technologies: ['Node.js', 'AWS', 'Blockchain', 'DeFi', 'NFT', 'AI']
+                        },
+                        {
+                            title: 'Application Developer (Full-Stack)',
+                            company: 'Optimis Corp',
+                            duration: 'January 2019 - June 2021',
+                            achievements: [
+                                'Built user messaging system using Datomic database',
+                                'Migrated entire userbase application from Datomic to PostgreSQL',
+                                'Created Clojure program to convert exercise data into printable PDF format',
+                                'Developed microservices with GraphQL integration',
+                                'Implemented Java/Clojure interop for various web applications'
+                            ],
+                            technologies: ['Clojure', 'Datomic', 'PostgreSQL', 'Kubernetes', 'Docker', 'Java', 'GraphQL']
+                        },
+                        {
+                            title: 'Junior Application Developer (Full-Stack)',
+                            company: 'PennyMac Loan Services',
+                            duration: 'July 2015 - October 2018',
+                            achievements: [
+                                'Acted as Scrum Master managing daily standups when project manager was unavailable',
+                                'Built key features for Clojure web app enabling loan officers to upload, edit, and track mortgage Excel sheets',
+                                'Took over for senior developer (April - October), managing customers, QA, and product direction',
+                                'Oversaw AWS deployments and worked extensively with Jenkins pipelines',
+                                'Achieved over 85% test coverage on existing Clojure codebase'
+                            ],
+                            technologies: ['Clojure', 'ClojureScript', 'MongoDB', 'Java', 'JavaScript', 'AWS', 'SQL', 'Jenkins']
+                        },
+                        {
+                            title: 'Contractor',
+                            company: 'Various Clients (Los Angeles)',
+                            duration: 'January 2012 - July 2015',
+                            achievements: [
+                                'Rewrote file-based Delphi application to use Client/Server-based DBMS (DBISAM)',
+                                'Developed custom solutions for multiple clients',
+                                'Installed computers for SNF Management'
+                            ],
+                            technologies: ['Delphi', 'DBISAM', 'SQL']
+                        }
+                    ],
+                    skills: [
+                        {
+                            name: 'Languages & Frameworks',
+                            items: ['Clojure', 'ClojureScript', 'Node.js', 'Vue.js', 'JavaScript', 'Java', 'C#', 'ActionScript', 'Delphi', 'Smalltalk']
+                        },
+                        {
+                            name: 'Databases',
+                            items: ['PostgreSQL', 'Datomic', 'MongoDB', 'SQL', 'DBISAM']
+                        },
+                        {
+                            name: 'Cloud & DevOps',
+                            items: ['AWS', 'Kubernetes', 'Docker', 'Jenkins', 'CI/CD']
+                        },
+                        {
+                            name: 'APIs & Architecture',
+                            items: ['REST API', 'GraphQL', 'Microservices', 'JVM']
+                        },
+                        {
+                            name: 'Tools & Platforms',
+                            items: ['GitHub', 'Git', 'HTML', 'Agile/Scrum']
+                        }
+                    ]
+                }
+            },
+            computed: {
+                currentYear() {
+                    return new Date().getFullYear();
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
